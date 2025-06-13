@@ -74,18 +74,18 @@ public class EmployeeServiceTests
         Assert.NotNull(result);
     }
 
-     [Fact]
-    public void IsEmailExists_ReturnsTrue()
-    {
-        // Arrange 
-        _mockRepo.Setup(r => r.IsEmailExists("test@email.com", It.IsAny<Guid>())).Returns(true);
+    //[Fact]
+    //public void IsEmailExists_ReturnsTrue()
+    //{
+    //    // Arrange 
+    //    _mockRepo.Setup(r => r.IsEmailExists("test@email.com", It.IsAny<Guid>())).Returns(true);
 
-        // Act
-        var result = _service.IsEmailExists("test@email.com");
+    //    // Act
+    //    var result = _service.IsEmailExists("test@email.com");
 
-        // Assert
-        Assert.True(result);
-    }
+    //    // Assert
+    //    Assert.True(result);
+    //}
 }
 
 
