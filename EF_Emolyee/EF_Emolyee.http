@@ -1,0 +1,6 @@
+@EF_Emolyee_HostAddress = http://localhost:5217
+
+GET {{EF_Emolyee_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
