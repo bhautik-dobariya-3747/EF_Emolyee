@@ -149,34 +149,34 @@ namespace MyWebApiProject.Tests.Repositories
             Assert.False(result);
         }
 
-        //[Fact]
-        //public void IsEmailExists_WithSameEmailDifferentGuid_ReturnsTrue()
-        //{
-        //    // Arrange 
-        //    var context = GetDbContext();
-        //    var repo = new EmployeeRepository(context);
-        //    var guid1 = Guid.NewGuid();
-        //    var employee = new EmployeeModel
-        //    {
-        //        Guid = guid1,
-        //        Name = "Test",
-        //        Email = "same@example.com",
-        //        Address = "Test Address",
-        //        Age = 30,
-        //        Department = "Testing",
-        //        Salary = 6000,
-        //        IsActive = true
-        //    };
+        [Fact]
+        public void IsEmailExists_WithSameEmailDifferentGuid_ReturnsTrue()
+        {
+            // Arrange 
+            var context = GetDbContext();
+            var repo = new EmployeeRepository(context);
+            var guid1 = Guid.NewGuid();
+            var employee = new EmployeeModel
+            {
+                Guid = guid1,
+                Name = "Test",
+                Email = "same@example.com",
+                Address = "Test Address",
+                Age = 30,
+                Department = "Testing",
+                Salary = 6000,
+                IsActive = true
+            };
 
-        //    context.Employees.Add(employee);
-        //    context.SaveChanges();
+            context.Employees.Add(employee);
+            context.SaveChanges();
 
-        //    // Act 
-        //    var result = repo.IsEmailExists("same@example.com", Guid.NewGuid());
+            // Act 
+            var result = repo.IsEmailExists("same@example.com", Guid.NewGuid());
 
-        //    // Assert
-        //    Assert.True(result);
-        //}
+            // Assert
+            Assert.True(result);
+        }
 
         [Fact]
         public void IsEmailExists_WithSameGuid_ReturnsFalse()

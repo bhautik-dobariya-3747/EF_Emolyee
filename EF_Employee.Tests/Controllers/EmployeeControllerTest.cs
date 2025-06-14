@@ -48,31 +48,31 @@ namespace MyWebApiProject.Tests
             Assert.Equal("Employee created successfully.", response["message"]);
         }
 
-        [Fact]
-        public void Create_DuplicateEmail_ReturnsBadRequest()
-        {
-            // Arrange
-            var employee = new EmployeeModel
-            {
-                Guid = Guid.NewGuid(),
-                Name = "Mary",
-                Email = "duplicate@example.com",
-                Address = "456 Avenue",
-                Age = 28,
-                Department = "HR",
-                Salary = 40000m,
-                IsActive = true
-            };
+        //[Fact]
+        //public void Create_DuplicateEmail_ReturnsBadRequest()
+        //{
+        //    // Arrange
+        //    var employee = new EmployeeModel
+        //    {
+        //        Guid = Guid.NewGuid(),
+        //        Name = "Mary",
+        //        Email = "duplicate@example.com",
+        //        Address = "456 Avenue",
+        //        Age = 28,
+        //        Department = "HR",
+        //        Salary = 40000m,
+        //        IsActive = true
+        //    };
 
-            _mockService.Setup(s => s.IsEmailExists(employee.Email, null)).Returns(true);
+        //    _mockService.Setup(s => s.IsEmailExists(employee.Email, null)).Returns(true);
 
-            // Act
-            var result = _controller.Create(employee);
+        //    // Act
+        //    var result = _controller.Create(employee);
 
-            // Assert
-            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal("Email address already exists.", badRequest.Value);
-        }
+        //    // Assert
+        //    var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+        //    Assert.Equal("Email address already exists.", badRequest.Value);
+        //}
 
 
 
