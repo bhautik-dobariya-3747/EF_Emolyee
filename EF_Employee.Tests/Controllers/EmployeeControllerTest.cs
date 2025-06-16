@@ -20,33 +20,33 @@ namespace MyWebApiProject.Tests
             _controller = new EmployeeController(_mockService.Object);
         }
 
-        //[Fact]
-        //public void Create_ValidEmployee_ReturnsOk()
-        //{
-        //    // Arrange
-        //    var employee = new EmployeeModel
-        //    {
-        //        Guid = Guid.NewGuid(),
-        //        Name = "John",
-        //        Email = "john@example.com",
-        //        Address = "123 Street",
-        //        Age = 30,
-        //        Department = "IT",
-        //        Salary = 50000,
-        //        IsActive = true
-        //    };
+        [Fact]
+        public void Create_ValidEmployee_ReturnsOk()
+        {
+            // Arrange
+            var employee = new EmployeeModel
+            {
+                Guid = Guid.NewGuid(),
+                Name = "John",
+                Email = "john@example.com",
+                Address = "123 Street",
+                Age = 30,
+                Department = "IT",
+                Salary = 50000,
+                IsActive = true
+            };
 
-        //    _mockService.Setup(s => s.IsEmailExists(employee.Email, It.IsAny<Guid>())).Returns(false);
-        //    _mockService.Setup(s => s.Create(employee)).Returns(employee);
+            _mockService.Setup(s => s.IsEmailExists(employee.Email, It.IsAny<Guid>())).Returns(false);
+            _mockService.Setup(s => s.Create(employee)).Returns(employee);
 
-        //    // Act
-        //    var result = _controller.Create(employee);
+            // Act
+            var result = _controller.Create(employee);
 
-        //    // Assert
-        //    var okResult = Assert.IsType<OkObjectResult>(result);
-        //    var response = okResult.Value as IDictionary<string, object>;
-        //    Assert.Equal("Employee created successfully.", response["message"]);
-        //}
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var response = okResult.Value as IDictionary<string, object>;
+            Assert.Equal("Employee created successfully.", response["message"]);
+        }
 
         [Fact]
         public void Create_DuplicateEmail_ReturnsBadRequest()

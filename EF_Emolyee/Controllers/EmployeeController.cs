@@ -14,7 +14,7 @@ namespace MyWebApiProject.Controllers
         {
             _employeeService = service;
         }
-
+            
         [HttpPost("Create")]
         [ProducesResponseType(typeof(EmployeeModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -28,7 +28,7 @@ namespace MyWebApiProject.Controllers
             {
                 if (_employeeService.IsEmailExists(employee.Email))
                     return BadRequest("Email address already exists.");
-
+                                
                 var created = _employeeService.Create(employee);
                 if (created == null)
                 return StatusCode(500, "Employee creation failed.");

@@ -91,7 +91,7 @@ namespace MyWebApiProject.Tests.Repositories
                 Age = 35,
                 Department = "Finance",
                 Salary = 7500,
-                IsActive = true
+                IsActive = true     
             };
 
             context.Employees.Add(employee);
