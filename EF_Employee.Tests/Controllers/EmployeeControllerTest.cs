@@ -1,10 +1,12 @@
 ﻿using Employee.Service.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MyWebApiProject.Controllers;
 using MyWebApiProject.Models;
 using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace MyWebApiProject.Tests
 {
@@ -74,22 +76,22 @@ namespace MyWebApiProject.Tests
         }
 
 
-
         [Fact]
         public void Update_ValidEmployee_ReturnsOk()
         {
             // Arrange
             var employee = new EmployeeModel
-            {          
+            {
                 Email = "shah@example.com",
-                Guid = Guid.NewGuid(), 
+                Guid = Guid.NewGuid(),
                 Name = "jay",
                 Address = "pok",
-                Age = 30 
+                Age = 30
             };
 
-            _mockService.Setup(s => s.IsEmailExists(employee.Email, employee.Guid)).Returns(false);
-            _mockService.Setup(s => s.Update(employee));
+            _mockService.Setup(s => s.IsEmailExists(employee.Email, null)).Returns(false);
+            _mockService.Setup(s => s.Update(employee)).Returns(employee);
+
 
             // Act
             var result = _controller.Update(employee);

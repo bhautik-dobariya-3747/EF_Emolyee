@@ -24,7 +24,6 @@ namespace Employee.Service
 
             var createdEmployee = _repository.Add(employee);
             return createdEmployee;
-
         }   
 
         public EmployeeModel Update(EmployeeModel employee)
