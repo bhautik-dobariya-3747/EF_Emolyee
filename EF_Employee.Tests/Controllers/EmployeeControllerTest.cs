@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MyWebApiProject.Controllers;
 using MyWebApiProject.Models;
-using Xunit;
 using System;
 using System.Collections.Generic;
 
