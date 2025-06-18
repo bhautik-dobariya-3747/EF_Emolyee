@@ -31,6 +31,34 @@ public class EmployeeServiceTests
     }
 
     [Fact]
+    public void Create_AssignsGuidAndCreatedBy_WhenMissing()
+    {
+        // Arrange
+        var employee = new EmployeeModel
+        {
+            Guid = Guid.Empty,         // Should be auto-assigned
+            CreatedBy = 0,             // Should default to 1
+            Name = "Jane Doe",
+            Address = "Somewhere",
+            Age = 28,
+            Department = "Finance",
+            Salary = 75000,
+            Email = "jane.doe@example.com",
+            IsActive = true
+        };
+
+        _mockRepo.Setup(r => r.Add(It.IsAny<EmployeeModel>()))
+                 .Returns((EmployeeModel e) => e); // Return the employee that was passed in
+
+        // Act
+        var result = _service.Create(employee);
+
+        // Assert
+        Assert.NotEqual(Guid.Empty, result.Guid);     // Guid should be assigned
+        Assert.Equal(1, result.CreatedBy);            // CreatedBy should be set to 1
+    }
+
+    [Fact]
     public void Update_ReturnsUpdatedEmployee()
     {
         // Arrange 
@@ -44,6 +72,21 @@ public class EmployeeServiceTests
 
         // Assert
         Assert.NotNull(result);
+    }
+
+    [Fact]
+    public void Update_EmployeeNotFound_ReturnsNull()
+    {
+        // Arrange
+        var employee = new EmployeeModel { Guid = Guid.NewGuid() };
+
+        _mockRepo.Setup(r => r.GetByGuid(employee.Guid)).Returns((EmployeeModel)null);
+
+        // Act
+        var result = _service.Update(employee);
+
+        // Assert
+        Assert.Null(result);
     }
 
     [Fact]
