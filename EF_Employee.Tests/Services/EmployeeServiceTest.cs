@@ -104,6 +104,20 @@ public class EmployeeServiceTests
     }
 
     [Fact]
+    public void Delete_ReturnsFalse_WhenEmployeeNotFound()
+    {
+        // Arrange
+        var guid = Guid.NewGuid();
+        _mockRepo.Setup(r => r.Delete(guid)).Returns(false);
+
+        // Act
+        var result = _service.Delete(guid);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
     public void Get_ReturnsEmployee()
     {
         // Arrange 
@@ -118,6 +132,20 @@ public class EmployeeServiceTests
     }
 
     [Fact]
+    public void Get_ReturnsNull_WhenEmployeeNotFound()
+    {
+        // Arrange
+        var guid = Guid.NewGuid();
+        _mockRepo.Setup(r => r.GetByGuid(guid)).Returns((EmployeeModel)null);
+
+        // Act
+        var result = _service.Get(guid);
+
+        // Assert
+        Assert.Null(result);
+    }
+
+    [Fact]
     public void IsEmailExists_ReturnsTrue()
     {
         // Arrange 
@@ -129,6 +157,20 @@ public class EmployeeServiceTests
         // Assert
         Assert.True(result);
     }
+
+    [Fact]
+    public void IsEmailExists_ReturnsFalse_WhenEmailDoesNotExist()
+    {
+        // Arrange
+        _mockRepo.Setup(r => r.IsEmailExists("nonexistent@email.com", It.IsAny<Guid>())).Returns(false);
+
+        // Act
+        var result = _service.IsEmailExists("nonexistent@email.com");
+
+        // Assert
+        Assert.False(result);
+    }
+
 }
 
 
