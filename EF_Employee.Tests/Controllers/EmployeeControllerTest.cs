@@ -50,6 +50,32 @@ namespace MyWebApiProject.Tests
         }
 
         [Fact]
+        public void Create_InvalidModel_ReturnsBadRequest()
+        {
+            // Arrange
+            _controller.ModelState.AddModelError("Name", "Required");
+
+            var invalidEmployee = new EmployeeModel
+            {
+                Guid = Guid.NewGuid(),
+                Name = "KANJI",
+                Address = "GOKUL",
+                Age = 25,
+                Department = "OPEARTOR",
+                Salary = 40000000000,
+                IsActive = true,
+                Email = "kanji@gmail.com"
+            };
+
+            // Act
+            var result = _controller.Create(invalidEmployee);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<SerializableError>(badRequestResult.Value);
+        }
+
+        [Fact]
         public void Create_DuplicateEmail_ReturnsBadRequest()
         {
             // Arrange
@@ -75,12 +101,11 @@ namespace MyWebApiProject.Tests
             Assert.Equal("Email address already exists.", badRequest.Value);
         }
 
-
         [Fact]
         public void Update_ValidEmployee_ReturnsOk()
         {
             // Arrange
-            var employee = new EmployeeModel
+            var employee = new EmployeeModel    
             {
                 Email = "shah@example.com",
                 Guid = Guid.NewGuid(),
@@ -114,6 +139,49 @@ namespace MyWebApiProject.Tests
             // Assert
             var badRequest = Assert.IsType<BadRequestObjectResult>(result);
             Assert.Equal("Email already exists for another employee.", badRequest.Value);
+        }
+
+        [Fact]
+        public void Update_InvalidModelState_ReturnsBadRequest()
+        {
+            // Arrange
+            _controller.ModelState.AddModelError("Name", "Name is required.");
+
+            var employee = new EmployeeModel(); // Missing fields
+
+            // Act
+            var result = _controller.Update(employee);
+
+            // Assert
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(400, badRequest.StatusCode);
+        }
+
+        [Fact]
+        public void Update_EmployeeNotFound_ReturnsNotFound()
+        {
+            // Arrange
+            var employee = new EmployeeModel
+            {
+                Guid = Guid.NewGuid(),
+                Name = "Ghost",
+                Address = "Nowhere",
+                Age = 99,
+                Department = "Unknown",
+                Salary = 0,
+                IsActive = false,
+                Email = "ghost@example.com"
+            };
+
+            _mockService.Setup(s => s.IsEmailExists(employee.Email, employee.Guid)).Returns(false);
+            _mockService.Setup(s => s.Update(employee)).Returns((EmployeeModel)null); // not found
+
+            // Act
+            var result = _controller.Update(employee);
+
+            // Assert
+            var notFound = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal("Employee not found.", notFound.Value);
         }
 
         [Fact]

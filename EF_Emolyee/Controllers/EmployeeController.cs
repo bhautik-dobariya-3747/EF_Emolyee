@@ -9,7 +9,8 @@ namespace MyWebApiProject.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
-            
+
+        //  Constructor in your EmployeeController file :
         public EmployeeController(IEmployeeService service)
         {
             _employeeService = service;
